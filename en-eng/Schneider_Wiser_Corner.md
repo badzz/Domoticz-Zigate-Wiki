@@ -433,9 +433,22 @@ At that stage, someone set a target temperature on the Application managing the 
 ## Decoding Cluster 0x0201 on Attribute 0xe011
 
 ATTRIBUTE_THERMOSTAT_HACT_CONFIG
-*  0x00 - Conventional (ON/OFF)
-* 0x02 - Setpoint (set temperature)
-* 0x03 - FIP - mode fil pilote 
+* bit 0 - mode of heating  : 0 is setpoint, 1 is fip mode
+* bit 1 - mode of heater : 0 is conventional heater, 1 is fip enabled heater
+* for validation , 0x80 is added to he value retrived from HACT
+
+Hence , when writing
+
+* 0x00 - Conventional heater in setpoint mode (ON/OFF)
+* 0x01 - impossible (can't have a conventional heater in fip mode)
+* 0x02 - fip heater in Setpoint mode (set temperature)
+* 0x03 - fip heater in FIP mode  - mode fil pilote 
+
+when reading
+* 0x80 - Conventional heater in setpoint mode (ON/OFF)
+* 0x81 - impossible (can't have a conventional heater in fip mode)
+* 0x82 - fip heater in Setpoint mode (set temperature)
+* 0x83 - fip heater in FIP mode  - mode fil pilote 
 
 
 
